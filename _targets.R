@@ -10,8 +10,8 @@ library(targets)
 # This is where you write source(\"R/functions.R\")
 # if you keep your functions in external scripts.
 
-source("code/config.R")
-source("code/functions.R")
+source("config.R")
+source("functions.R")
 
 # Set target-specific options such as packages.
 tar_option_set(packages = "dplyr")
