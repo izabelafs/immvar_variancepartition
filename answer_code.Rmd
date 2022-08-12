@@ -1,0 +1,59 @@
+---
+title: "ImmVar and variancePartition"
+author: "Izabela Silva"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Targets must be loaded first
+# Compute Canonical Correlation Analysis (CCA) between all pairs of variables returns absolute correlation value
+
+```{r correlation matrix}
+form_cca <- ~ Individual + CellType + Batch + Sex + Age
+C = canCorPairs(form_cca, info)
+plotCorrMatrix(C)
+
+```
+
+Plot correlation matrix
+
+```{r correlation matrix}
+form_cca <- ~ Individual + CellType + Batch + Sex + Age
+C = canCorPairs(form_cca, info)
+```
+
+The individual column is highly correlated with all the other columns, therefore should not be take into the formula to the modeling
+
+#Analysis using variancePartition
+varPart2 is generated within _targets.R
+
+```{r sorting matrix}
+vp <- sortCols(varPart2)
+```
+Bar plot of variance fractions for the first 10 genes
+```{r variance fractions}
+plotPercentBars( vp[1:10,] )
+```
+Violin plot of contribution of each variable to total variance
+```{r violin plots}
+plotVarPart( vp )
+```
+#Plot expression stratified by CellType
+
+```{r expression by cell type}
+
+i <- which.max(varPart$Individual )
+GE <- data.frame( Expression = eset.rma[i,],
+                  Individual = info$CellType)
+
+label <- paste("CellType:", format(varPart$CellType[i]*100,
+                                     digits=3), "%")
+main <- rownames(eset.rma)[i]
+plotStratify( Expression ~ CellType, GE, colorBy=NULL,
+              text=label, main=main)
+````
+
+
