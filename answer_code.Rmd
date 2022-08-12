@@ -55,5 +55,7 @@ main <- rownames(eset.rma)[i]
 plotStratify( Expression ~ CellType, GE, colorBy=NULL,
               text=label, main=main)
 ````
+#Use of variancePartition in a different problem
 
+For example, the expression data that I have been working now comes from different brain tissues. This might have a considerable impact during the downstream analaysis for the differentially expressed genes. Therefore, addressing such concern with variancePartition could be and option. Or even so, applying one of the direct uses of varianceParttion package through dream, to improve the FDR.
 
